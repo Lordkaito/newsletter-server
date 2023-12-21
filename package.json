@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "vercel-build": "echo hello"
+    "vercel-build": "prisma generate && echo hello"
   },
   "repository": {
     "type": "git",
