@@ -6,10 +6,16 @@ const app = express();
 
 app.use(express.json());
 
+// Middleware para permitir CORS
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Content-Type");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  next();
+});
+
 app.get(`/`, async (req, res) => {
-  res
-    .header("Access-Control-Allow-Origin", "*")
-    .json({ message: "Hello World" });
+  res.json({ message: "Hello World" });
 });
 
 app.post(`/newsletter`, async (req, res) => {
@@ -20,14 +26,13 @@ app.post(`/newsletter`, async (req, res) => {
       email,
     },
   });
-  res.header("Access-Control-Allow-Origin", "*").json(result);
+  res.json(result);
 });
 
 app.get("/users", async (req, res) => {
-  // for now, we count users instead of showing them
   const users = await prisma.newsletter.count();
   console.log(users);
-  res.header("Access-Control-Allow-Origin", "*").json(users);
+  res.json(users);
 });
 
 app.use((req, res, next) => {
@@ -37,5 +42,8 @@ app.use((req, res, next) => {
   next();
 });
 
-module.exports = app;
-// app.listen(3000, () => console.log("Server on port 3000"));
+// module.exports = app;
+
+app.listen(3000, () => {
+  console.log("Servidor iniciado en el puerto 3000");
+})
