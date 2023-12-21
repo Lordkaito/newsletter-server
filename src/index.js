@@ -6,6 +6,10 @@ const app = express();
 
 app.use(express.json());
 
+app.get(`/`, async (req, res) => {
+  res.json({ message: "Hello World" });
+});
+
 app.post(`/newsletter`, async (req, res) => {
   const { email } = req.body;
 
@@ -17,12 +21,9 @@ app.post(`/newsletter`, async (req, res) => {
   res.json(result);
 });
 
-app.get('/users', async (req, res) => {
+app.get("/users", async (req, res) => {
   const users = await prisma.newsletter.findMany();
   res.json(users);
 });
 
-const server = app.listen(process.env.PORT || 3000, () =>
-  console.log("Server ready")
-);
-
+module.exports = app;
