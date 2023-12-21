@@ -24,7 +24,9 @@ app.post(`/newsletter`, async (req, res) => {
 });
 
 app.get("/users", async (req, res) => {
-  const users = await prisma.newsletter.findMany();
+  // for now, we count users instead of showing them
+  const users = await prisma.newsletter.count();
+  console.log(users);
   res.header("Access-Control-Allow-Origin", "*").json(users);
 });
 
@@ -36,3 +38,4 @@ app.use((req, res, next) => {
 });
 
 module.exports = app;
+// app.listen(3000, () => console.log("Server on port 3000"));
