@@ -7,7 +7,9 @@ const app = express();
 app.use(express.json());
 
 app.get(`/`, async (req, res) => {
-  res.json({ message: "Hello World" });
+  res
+    .header("Access-Control-Allow-Origin", "*")
+    .json({ message: "Hello World" });
 });
 
 app.post(`/newsletter`, async (req, res) => {
@@ -18,12 +20,19 @@ app.post(`/newsletter`, async (req, res) => {
       email,
     },
   });
-  res.json(result);
+  res.header("Access-Control-Allow-Origin", "*").json(result);
 });
 
 app.get("/users", async (req, res) => {
   const users = await prisma.newsletter.findMany();
-  res.json(users);
+  res.header("Access-Control-Allow-Origin", "*").json(users);
+});
+
+app.use((req, res, next) => {
+  if (req.path !== "/" && req.path !== "/newsletter" && req.path !== "/users") {
+    return res.status(404).json({ error: "Ruta no encontrada" });
+  }
+  next();
 });
 
 module.exports = app;
