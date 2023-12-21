@@ -22,6 +22,6 @@ app.get('/users', async (req, res) => {
   res.json(users);
 });
 
-module.exports = app;
+// module.exports = app;
 
-// const server = app.listen(3000)
+const server = app.listen(3000)
