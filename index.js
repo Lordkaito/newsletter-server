@@ -22,6 +22,7 @@ app.get('/users', async (req, res) => {
   res.json(users);
 });
 
-// module.exports = app;
+const server = app.listen(process.env.PORT || 3000, () =>
+  console.log("Server ready")
+);
 
-const server = app.listen(3000)
